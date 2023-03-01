@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ App::currentLocale() }}" dir="{{ LaravelLocalization::getCurrentLocaleDirection() }}">
+<html lang="en">
 	<!--begin::Head-->
 	<x-head />
 	<!--end::Head-->
@@ -56,7 +56,8 @@
 
                          {{-- Body --}}
 
-						 {{ $slot  }}
+
+
 
 
 							<!--end::Row-->

@@ -1,11 +1,11 @@
 <div id="kt_header" class="header py-6 py-lg-0" data-kt-sticky="true" data-kt-sticky-name="header" data-kt-sticky-offset="{lg: '300px'}">
     <!--begin::Container-->
-    <div class="header-container container-xxl">
+    <div class="header-container container-xxl" id="headerContainer">
         <!--begin::Page title-->
         <div class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-20 py-3 py-lg-0 me-3">
             <!--begin::Heading-->
             <h1 class="d-flex flex-column text-dark fw-bolder my-1">
-                <span class="text-white fs-1">Dashboard</span>
+                <span class="text-white fs-1">{{ t('Dashboard') }}</span>
                 <small class="text-gray-600 fs-6 fw-normal pt-2">Create a store with #YDR-124-346 code</small>
             </h1>
             <!--end::Heading-->
@@ -1394,48 +1394,7 @@
                                 <img class="w-15px h-15px rounded-1 ms-2" src="assets/media/flags/united-states.svg" alt="" /></span></span>
                             </a>
                             <!--begin::Menu sub-->
-                            <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="../../demo9/dist/account/settings.html" class="menu-link d-flex px-5 active">
-                                    <span class="symbol symbol-20px me-4">
-                                        <img class="rounded-1" src="assets/media/flags/united-states.svg" alt="" />
-                                    </span>English</a>
-                                </div>
-                                <!--end::Menu item-->
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="../../demo9/dist/account/settings.html" class="menu-link d-flex px-5">
-                                    <span class="symbol symbol-20px me-4">
-                                        <img class="rounded-1" src="assets/media/flags/spain.svg" alt="" />
-                                    </span>Spanish</a>
-                                </div>
-                                <!--end::Menu item-->
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="../../demo9/dist/account/settings.html" class="menu-link d-flex px-5">
-                                    <span class="symbol symbol-20px me-4">
-                                        <img class="rounded-1" src="assets/media/flags/germany.svg" alt="" />
-                                    </span>German</a>
-                                </div>
-                                <!--end::Menu item-->
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="../../demo9/dist/account/settings.html" class="menu-link d-flex px-5">
-                                    <span class="symbol symbol-20px me-4">
-                                        <img class="rounded-1" src="assets/media/flags/japan.svg" alt="" />
-                                    </span>Japanese</a>
-                                </div>
-                                <!--end::Menu item-->
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="../../demo9/dist/account/settings.html" class="menu-link d-flex px-5">
-                                    <span class="symbol symbol-20px me-4">
-                                        <img class="rounded-1" src="assets/media/flags/france.svg" alt="" />
-                                    </span>French</a>
-                                </div>
-                                <!--end::Menu item-->
-                            </div>
+                            <x-language-switcher />
                             <!--end::Menu sub-->
                         </div>
                         <!--end::Menu item-->
