@@ -3,7 +3,7 @@
 
 <head>
     <base href="../../../">
-    <title>Shipment Tracking System</title>
+    <title>{{ t('Shipment Tracking System') }}</title>
     <meta charset="utf-8" />
     <meta name="description"
         content="The most advanced Bootstrap Admin Theme on Themeforest trusted by 94,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue &amp; Laravel versions. Grab your copy now and get life-time updates for free." />
@@ -20,7 +20,7 @@
     <link rel="shortcut icon" href="{{ asset('assets/media/logos/logo-1645494239.jpg') }}" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
     <link href="{{ asset('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/style.bundle.rtl.css') }}" rel="stylesheet" type="text/css" />
 </head>
 
 <body id="kt_body" class="bg-body">
@@ -64,10 +64,10 @@
                                 <div class="alert alert-success">{{ session('status') }}</div>
                             @endif
                             <div class="text-center mb-10">
-                                <h1 class="text-dark mb-3">{{ __('Sign In') }}</h1>
+                                <h1 class="text-dark mb-3">{{ t('Sign In') }}</h1>
                             </div>
                             <div class="fv-row mb-10">
-                                <label class="form-label fs-6 fw-bolder text-dark">Email</label>
+                                <label class="form-label fs-6 fw-bolder text-dark">{{ t('Email') }}</label>
                                 <input class="form-control form-control-lg form-control-solid @error('email') is-invalid @enderror" type="text"
                                     name="email" id="email" autocomplete="off" />
                                     @error('email')
@@ -76,9 +76,8 @@
                             </div>
                             <div class="fv-row mb-10">
                                 <div class="d-flex flex-stack mb-2">
-                                    <label class="form-label fw-bolder text-dark fs-6 mb-0">Password</label>
-                                    <a href="{{ route('password.request') }}" class="link-primary fs-6 fw-bolder">Forgot
-                                        Password ?</a>
+                                    <label class="form-label fw-bolder text-dark fs-6 mb-0">{{ t('Password') }}</label>
+                                    <a href="{{ route('password.request') }}" class="link-primary fs-6 fw-bolder">{{ t('Forgot Password ?') }}</a>
                                 </div>
                                 <input class="form-control form-control-lg form-control-solid @error('password') is-invalid @enderror" type="password"
                                     name="password" id="password" autocomplete="off" />
@@ -88,8 +87,8 @@
                             </div>
                             <div class="text-center">
                                 <button type="submit" id="kt_sign_in_submit" class="btn btn-lg btn-primary w-100 mb-5">
-                                    <span class="indicator-label">Continue</span>
-                                    <span class="indicator-progress">Please wait...
+                                    <span class="indicator-label">{{ t('Continue') }}</span>
+                                    <span class="indicator-progress">{{ t('Please wait...') }}
                                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                 </button>
                             </div>
