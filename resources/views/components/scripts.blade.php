@@ -16,4 +16,5 @@
 		<script src="{{ asset('assets/js/custom/utilities/modals/upgrade-plan.js') }}"></script>
 		<script src="{{ asset('assets/js/custom/utilities/modals/create-app.js') }}"></script>
 		<script src="{{ asset('assets/js/custom/utilities/modals/users-search.js') }}"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 		<!--end::Page Custom Javascript-->

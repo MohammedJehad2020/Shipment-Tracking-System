@@ -1411,11 +1411,11 @@
                                     </span>
                                     <div class="menu-sub menu-sub-accordion">
                                         <div class="menu-item">
-                                            <a class="menu-link" href="../../demo9/dist/apps/user-management/users/list.html">
+                                            <a class="menu-link" href="{{ route('users.index') }}">
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
-                                                <span class="menu-title">Users List</span>
+                                                <span class="menu-title">{{ t('Users List') }}</span>
                                             </a>
                                         </div>
                                         <div class="menu-item">
