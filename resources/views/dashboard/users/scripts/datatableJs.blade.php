@@ -21,15 +21,55 @@
                 columns: [
                   { data: 'checkboxes', name: 'checkboxes', orderable: false, searchable: false },
                     { data: 'name' },
+                    { data: 'email' },
                     { data: 'role' },
                     { data: 'last_login' },
-                    { data: 'two_step' },
+                    { data: 'status_user' },
                     { data: 'joined_date' },
-                    // { data: 'status'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ],
     
                 columnDefs: [
+                    {
+                        "targets": 1,
+                        "orderable": false,
+                        "render": function (data, type, full) {
+                                 return `<div class="d-flex align-items-center">
+                                 <td class="d-flex align-items-center">
+                                            <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                                <a href="../../demo9/dist/apps/user-management/users/view.html">
+                                                    <div class="symbol-label">
+                                                        <img src="${full.image}" alt="${full.name}" class="w-100">
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <a href="../../demo9/dist/apps/user-management/users/view.html" class="text-gray-800 text-hover-primary mb-1">${full.name}</a>
+                                                
+                                            </div>
+										</td></div>`;
+                                        //<span>${full.email}</span>
+                        }
+                    },
+                    {
+                        targets: 4,
+                        orderable: false,
+                        render: function (data) {
+                                 return `<td data-order="${data}">
+													<div class="badge badge-light fw-bolder">${data}</div>
+												</td>`;
+                        }
+                    },
+                  /*   {
+                        targets: 3,
+                        orderable: false,
+                        render: function (data) {
+                                 return `<td>
+											<div class="badge badge-light-success fw-bolder">${data}</div>
+										</td>`;
+                        }
+                    }, */
+
                     // {
                     //     targets: 0,
                     //     orderable: false,

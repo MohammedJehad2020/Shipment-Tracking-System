@@ -12,8 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-           $table->string('image')->nullable()->after('password');
-           $table->softDeletes()->after('updated_at');
+            $table->dateTime('last_login_at')->nullable()->after('image');
+            $table->string('last_login_ip_address')->after('last_login_at')->nullable();
+            $table->string('status')->nullable()->after('remember_token');
         });
     }
 
@@ -23,7 +24,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('image');
+           $table->dropColumn('last_login_at');
+           $table->dropColumn('last_login_ip_address');
+           $table->dropColumn('status');
         });
     }
 };

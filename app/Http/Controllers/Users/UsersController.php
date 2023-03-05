@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers\Users;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateRequests;
+use App\Http\Requests\UserRequests;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Yajra\DataTables\Facades\DataTables;
-
+use Illuminate\Support\Str;
 
 class UsersController extends Controller
 {
+
+    protected $model = User::class;
     /**
      * Display a listing of the resource.
      */
@@ -21,22 +26,20 @@ class UsersController extends Controller
                 return [
                     'id' => $item->id,
                     'name' =>$item->name,
-                    'role'=> $item->profile_image,
-                    'last_login' => $item?->fullName,
-                    'two_step'=> $item?->country?->name['en'],
+                    'image'=> $item->image ? asset('images/'.$item->image) : asset('assets/media/avatars/300-5.jpg'),
+                    'email' =>$item->email,
+                    'role'=> $item?->profile_image,
+                    'last_login' => Carbon::parse($item?->last_login_at)->diffForHumans(), //,
                     'joined_date'=> $item->created_at->format('d-m-Y'),
-                    'status' => $item->status,
+                    'status' => $item?->status,
                 ];
             })->toArray();
-            // $data = Campaign::query()->;
             $data =  response()->json( DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('checkboxes','dashboard.users.datatables.checkbox')
                 ->addColumn('action', 'dashboard.users.datatables.action') 
 
-                // ->addColumn('action', 'admin.admins.datatables.action') ->rawColumns(['action','status_admin'])
-
-                // ->addColumn('status_user','dashboard.users.datatables.status_user')
+                ->addColumn('status_user','dashboard.users.datatables.status_user')
                 ->rawColumns(['action', 'checkboxes','status_user'])
                 ->make(true));
                 return $data->original;
@@ -55,9 +58,13 @@ class UsersController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(UserRequests $request)
     {
-        //
+        // dd($request->all());
+        $req = $request->merge(['password'=> Str::password(10)]);
+        $request = new Request($req->except(['role_id']));
+        $obj = parent::saveModel($request, $this->model);
+        return redirect()->back();   
     }
 
     /**
