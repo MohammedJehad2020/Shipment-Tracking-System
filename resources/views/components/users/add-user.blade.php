@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
-                <form {{-- id="kt_modal_add_user_form" --}} class="form" method="POST" action="{{ route('users.store') }}" enctype="multipart/form-data">
+                <form {{-- id="kt_modal_add_user_form" --}} id="add-user" class="form" method="POST" action="{{ route('users.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                         

@@ -6,6 +6,6 @@
             <option value="1">{{ t('Staf') }}</option>
         </select>
         @error($name)
-        <div class="alert alert-danger">{{ $message }}</div>
+        <div class="text-danger">{{ $message }}</div>
         @enderror
 </div>

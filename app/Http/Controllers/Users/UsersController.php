@@ -64,7 +64,7 @@ class UsersController extends Controller
         $req = $request->merge(['password'=> Str::password(10)]);
         $request = new Request($req->except(['role_id']));
         $obj = parent::saveModel($request, $this->model);
-        return redirect()->back();   
+        // return redirect()->back();   
     }
 
     /**

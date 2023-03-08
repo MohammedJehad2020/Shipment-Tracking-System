@@ -1,5 +1,4 @@
 <x-master>
- 
     <div class="card">
         <!--begin::Card header-->
         <div class="card-header border-0 pt-6">
@@ -223,3 +222,50 @@
 @include('dashboard.users.scripts.datatableJs')
 @include('dashboard.includes.delete_item',['route_delete'=>url("/users")])
 @include('dashboard.includes.delete_array', ['route_delete' => route('users.del_ids')])
+
+
+  <script>
+    $('#add-user').submit(function(e) {
+        e.preventDefault();
+        let formData = new FormData(this);
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('users.store') }}",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: (data) => {
+                var index = data;
+                $.each(data, function(index, value) {
+                    $('#' + value).removeClass('invalid-border');
+                    $('#' + value + "_valid").removeClass('d-block');
+                    $('#' + value + "_valid").html();
+                });
+                $('#datatable').DataTable().ajax.reload();
+                $('#kt_modal_add_user').modal('hide')
+                document.getElementById('add-user')
+            .reset(); //reset all inputs in form after storing data
+                //console.log(data);
+
+                Swal.fire({
+                    text: "Added User Successfully",
+                    icon: "success",
+                    buttonsStyling: false,
+                    confirmButtonText: "Ok, got it!",
+                    customClass: {
+                        confirmButton: "btn btn-primary"
+                    }
+                });
+
+            },
+            error: function(data) {
+                var errors = data.responseJSON.errors;
+            var erorr_arr = [];
+            $.each(errors, function(index, value) {
+                var id_error = index+'-error';
+                 $('#'+ id_error).text(value[0]);
+            });
+            }
+        });
+    });
+</script>
