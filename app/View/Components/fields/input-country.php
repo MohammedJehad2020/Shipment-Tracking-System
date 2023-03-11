@@ -6,19 +6,15 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class avatar extends Component
+class inputCountry extends Component
 {
-
-    public $title, $name, $id, $avatar;
+    public $user;
     /**
      * Create a new component instance.
      */
-    public function __construct($title, $name, $id,$avatar)
+    public function __construct($user)
     {
-       $this->title = $title;
-       $this->name = $name;
-       $this->id = $id;
-       $this->avatar = $avatar;
+        $this->user = $user;
     }
 
     /**
@@ -26,6 +22,6 @@ class avatar extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.fields.avatar');
+        return view('components.fields.input-country');
     }
 }

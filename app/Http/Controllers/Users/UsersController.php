@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Users;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateRequests;
 use App\Http\Requests\UserRequests;
+use App\Models\Address;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
@@ -60,11 +61,9 @@ class UsersController extends Controller
      */
     public function store(UserRequests $request)
     {
-        // dd($request->all());
         $req = $request->merge(['password'=> Str::password(10)]);
         $request = new Request($req->except(['role_id']));
         $obj = parent::saveModel($request, $this->model);
-        // return redirect()->back();   
     }
 
     /**
@@ -72,7 +71,8 @@ class UsersController extends Controller
      */
     public function show(string $id)
     {
-
+        $user = User::findOrFail($id);
+        return view('dashboard.users.edit', compact('user'));
     }
 
     /**
@@ -86,9 +86,11 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-
+        $user = User::findOrFail($request->id);
+        $user->update($request->all());
+        $this->updateOrCreateAddress($request);
     }
 
     public function destroy( $id)
@@ -101,5 +103,20 @@ class UsersController extends Controller
     {
         $item = User::whereIn('id', $request->ids)->delete();
         return true;
+    }
+
+    public function updateOrCreateAddress($request)
+    {
+        Address::updateOrCreate(
+            [
+               'user_id' => $request->id,
+            ],[
+                'country_code' => $request->country_code,
+                'state' => $request->state,
+                'city' => $request->city,
+                'street' => $request->street,
+                'post_code' => $request->post_code,
+            ], 
+        );
     }
 }

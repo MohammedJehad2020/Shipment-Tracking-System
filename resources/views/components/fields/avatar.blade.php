@@ -1,7 +1,7 @@
 <div class="fv-row mb-7">
     <label class="d-block fw-bold fs-6 mb-5">{{ $title }}</label>
     <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('assets/media/svg/avatars/blank.svg')">
-        <div class="image-input-wrapper w-125px h-125px" style="background-image: url({{ asset('assets/media/avatars/300-6.jpg') }});"></div>
+        <div class="image-input-wrapper w-125px h-125px" style="background-image: url({{ $avatar ? asset('images/'.$avatar) : asset('assets/media/avatars/300-6.jpg') }});"></div>
         <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="{{ t('Change avatar') }}">
             <i class="bi bi-pencil-fill fs-7"></i>
             <input type="file" name="{{ $name }}" id="{{ $id }}" accept=".png, .jpg, .jpeg" />

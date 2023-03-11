@@ -17,7 +17,7 @@
                     @csrf
                     <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                         
-                        <x-fields.avatar title="{{ t('Avatar') }}" name="image" id="avatar" />
+                        <x-fields.avatar title="{{ t('Avatar') }}" name="image" id="avatar" avatar="" />
                         <x-fields.input title="{{ t('Full Name') }}" type="text" name="name" id="name" placeholder="{{ t('Full name') }}" />
                         <x-fields.input title="{{ t('Email') }}" type="email" name="email" id="email" placeholder="{{ t('example@domain.com') }}" />
                         <x-fields.input-select title="{{ t('Role') }}" name="role_id" id="role_id" placeholder="{{ t('Select Role') }}"/>
