@@ -9,6 +9,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 use Modules\HR\Entities\Experience;
 
 class Controller extends BaseController
@@ -20,7 +21,7 @@ class Controller extends BaseController
     protected $with = "";
 
 
-    public function saveModel(Request $request, $model)
+    public function saveModel(Request $request, $model, $imagePath)
     {
         if (Arr::get($request->all(), 'id')) {
             $obj = $model::findOrFail(Arr::get($request->all(), 'id'));
@@ -28,19 +29,27 @@ class Controller extends BaseController
             $obj = new $model();
         }
 
+        if($request->avatar_remove == '1'){
+            $path = $imagePath . $obj->image;
+            if(Storage::disk('public')->exists($path)){
+                Storage::disk('public')->delete($path);
+                $obj->image = null;
+            }
+        }
+
         if (Arr::has($request->all(), 'image')) {
             $file = $request->image;
             $extension = $file->getClientOriginalExtension(); // getting image extension
             $fileName = rand(11111, 99999) . '.' . $extension; // renameing image
-            $path = base_path() . '/public/images';
-            $file->move($path, $fileName);
+            $path = $imagePath. $fileName;
+            Storage::disk('public')->put($path, file_get_contents($file));
             $obj->image = $fileName;
         }
         if ($obj instanceof User && Arr::has($request->all(), 'password')) {
             if($request->password)
             $obj->password = \Hash::make($request->password);
         }
-        $obj->forceFill(Arr::except($request->all(), ['image','file', 'permissions', '_token', 'password']));
+        $obj->forceFill(Arr::except($request->all(), ['image','file', 'permissions', '_token', 'password', 'avatar_remove']));
         $obj->save();
 
         // if ($obj instanceof User && Arr::has($request->all(), 'permissions')) {

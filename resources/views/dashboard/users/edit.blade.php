@@ -13,7 +13,7 @@
                     <div class="d-flex flex-center flex-column py-5">
                         <!--begin::Avatar-->
                         <div class="symbol symbol-100px symbol-circle mb-7">
-                            <img src="{{ $user->image ? asset('images/'.$user->image) : asset('/assets/media/avatars/300-5.jpg')}}" alt="image" />
+                            <img src="{{ $user->image ? asset('storage/uploads/users-images/'.$user->image) : asset('/assets/media/avatars/blank.png')}}" alt="image" />
                         </div>
                         <!--end::Avatar-->
                         <!--begin::Name-->
@@ -87,7 +87,7 @@
                     <!--end::Summary-->
                     <!--begin::Details toggle-->
                     <div class="d-flex flex-stack fs-4 py-3">
-                        <div class="fw-bolder rotate collapsible" data-bs-toggle="collapse" href="#kt_user_view_details" role="button" aria-expanded="false" aria-controls="kt_user_view_details">Details
+                        <div class="fw-bolder rotate collapsible" data-bs-toggle="collapse" href="#kt_user_view_details" role="button" aria-expanded="false" aria-controls="kt_user_view_details">{{ t('Details') }}
                         <span class="ms-2 rotate-180">
                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
                             <span class="svg-icon svg-icon-3">
@@ -124,7 +124,7 @@
                             <!--begin::Details item-->
                             <!--begin::Details item-->
                             <div class="fw-bolder mt-5">{{ t('Language') }}</div>
-                            <div class="text-gray-600">English</div>
+                            <div class="text-gray-600">{{$user?->language ? Symfony\Component\Intl\Languages::getName($user?->language, lang()) : '--' }}</div>
                             <!--begin::Details item-->
                             <!--begin::Details item-->
                             <div class="fw-bolder mt-5">{{ t('Last Login') }}</div>
@@ -3472,3 +3472,48 @@
     <!--end::Modals-->
     
 </x-master>
+<script>
+    $('#edit-user').submit(function(e) {
+        e.preventDefault();
+        let formData = new FormData(this);
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('users.store') }}",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: (data) => {
+                var index = data;
+                $.each(data, function(index, value) {
+                    $('#' + value).removeClass('invalid-border');
+                    $('#' + value + "_valid").removeClass('d-block');
+                    $('#' + value + "_valid").html();
+                });
+                // $('#datatable').DataTable().ajax.reload();
+                $('#kt_modal_update_details').modal('hide')
+                document.getElementById('edit-user')
+            .reset(); //reset all inputs in form after storing data
+                //console.log(data);
+
+                Swal.fire({
+                    text: "Edited User Successfully",
+                    icon: "success",
+                    buttonsStyling: false,
+                    confirmButtonText: "Ok, got it!",
+                    customClass: {
+                        confirmButton: "btn btn-primary"
+                    }
+                });
+
+            },
+            error: function(data) {
+                var errors = data.responseJSON.errors;
+            var erorr_arr = [];
+            $.each(errors, function(index, value) {
+                var id_error = index+'-error';
+                 $('#'+ id_error).text(value[0]);
+            });
+            }
+        });
+    });
+</script>

@@ -1,9 +1,8 @@
 <div class="modal fade" id="kt_modal_update_details" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered mw-650px">
         <div class="modal-content">
-            <form class="form" method="POST" action="{{ route('users.update', $user->id) }}" id="kt_modal_update_user_form">
+            <form class="form" id="edit-user" method="POST" action="{{ route('users.store') }}" id="kt_modal_update_user_form" enctype="multipart/form-data">
                 @csrf
-                @method('PUT')
                 <input type="text" name="id" value="{{ $user->id }}" hidden>
                 <div class="modal-header" id="kt_modal_update_user_header">
                     <h2 class="fw-bolder">{{ t('Update User Details') }}</h2>
@@ -27,7 +26,7 @@
                             </span>
                         </span></div>
                         <div id="kt_modal_update_user_user_info" class="collapse show">
-                            <x-fields.avatar title="{{ t('Avatar') }}" name="image" id="avatar" avatar="{{ $user->image }}" />
+                            <x-fields.avatar title="{{ t('Avatar') }}" name="image" id="avatar" avatar="{{ $user->image ? asset('storage/uploads/users-images/'.$user->image) : asset('/assets/media/avatars/blank.png')}}" />
                             <x-fields.input title="{{ t('Full Name') }}" type="text" name="name" id="name" value="{{ $user->name }}" placeholder="{{ t('Full name') }}" />
                             <x-fields.input title="{{ t('Email') }}" type="email" name="email" id="email" value="{{ $user->email }}" placeholder="{{ t('example@domain.com') }}" />
                             <x-fields.input title="{{ t('Description') }}" type="text" name="description" id="description" value="{{ $user->description }}" placeholder="{{ t('description') }}" />

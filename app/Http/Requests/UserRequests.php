@@ -16,10 +16,15 @@ class UserRequests extends FormRequest
         return [
             'name'=> 'required',
             'email'=> 'required',
-
-            // 'status_id'=>'required|exists:statuses,id',
-            // 'group_id'=>'required_if:request_type,=,4|exists:groups,id',
-            // 'bag_id'=>'required_if:request_type,=,1',
+            'role_id'=> 'required_if:id,=,null',
+            'status'=> 'required_if:id,=,null',
+            'description'=> 'required_with:id',
+            'language'=> 'required_with:id',
+            'street'=> 'required_with:id',
+            'country_code'=> 'required_with:id',
+            'state'=> 'required_with:id',
+            'city'=> 'required_with:id',
+            'post_code'=> 'required_with:id',
         ];
     }
 
@@ -37,6 +42,7 @@ class UserRequests extends FormRequest
         return [
             'required'=>t('This field is required'),
             'required_if'=>t('This field is required'),
+            'required_with'=>t('This field is required'),
             'exists'=>t('Wrong value'),
             'integer'=>t('Wrong value'),
         ];

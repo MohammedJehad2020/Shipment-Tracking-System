@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\Users\UsersController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -40,6 +41,8 @@ Route::group([
 
         Route::resource('users', UsersController::class);
         Route::post('/delete-users', [UsersController::class, "del_ids"])->name("users.del_ids");
+
+        Route::resource('roles', RoleController::class);
 
     });
     require __DIR__ . '/auth.php';

@@ -6,6 +6,7 @@ use App\Http\Requests\UpdateRequests;
 use App\Http\Requests\UserRequests;
 use App\Models\Address;
 use App\Models\User;
+use App\Notifications\UserLoginDetails;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -27,7 +28,7 @@ class UsersController extends Controller
                 return [
                     'id' => $item->id,
                     'name' =>$item->name,
-                    'image'=> $item->image ? asset('images/'.$item->image) : asset('assets/media/avatars/300-5.jpg'),
+                    'image'=> $item->image ? asset('storage/uploads/users-images/'.$item->image) : asset('assets/media/avatars/blank.png'),
                     'email' =>$item->email,
                     'role'=> $item?->profile_image,
                     'last_login' => Carbon::parse($item?->last_login_at)->diffForHumans(), //,
@@ -51,7 +52,7 @@ class UsersController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): Response
+    public function create()
     {
         //
     }
@@ -61,9 +62,15 @@ class UsersController extends Controller
      */
     public function store(UserRequests $request)
     {
-        $req = $request->merge(['password'=> Str::password(10)]);
-        $request = new Request($req->except(['role_id']));
-        $obj = parent::saveModel($request, $this->model);
+        $password =Str::password(10);
+        $req = $request->merge(['password'=> $password]);
+        $requestWithoutAddressData = new Request($req->except(['role_id', 'street', 'country_code', 'post_code', 'state','city']));
+        $obj = parent::saveModel($requestWithoutAddressData, $this->model, 'uploads/users-images/');
+        if($request->id != null){
+          $this->updateOrCreateAddress($request);
+        }else{
+            $obj->notify(new UserLoginDetails($obj, $password));
+        }
     }
 
     /**
@@ -88,9 +95,9 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($request->id);
-        $user->update($request->all());
-        $this->updateOrCreateAddress($request);
+    //     $user = User::findOrFail($request->id);
+    //     $obj = parent::saveModel($request, $this->model, 'uploads/users-images/');
+    //     $this->updateOrCreateAddress($request);
     }
 
     public function destroy( $id)
