@@ -6,5 +6,5 @@
             <option value="{{ $code }}" {{ $user->language == $code ? 'selected' : '' }}>{{ $name }}</option>
            @endforeach
         </select>
-    <div id="language-error" class="text-danger">{{-- $message --}}</div>
+    <div id="language-error" class="text-danger error-msg">{{-- $message --}}</div>
 </div>

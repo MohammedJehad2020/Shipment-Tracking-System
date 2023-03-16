@@ -15,6 +15,6 @@
         </span>
     </div>
     <div class="form-text">{{ t('Allowed file types: png, jpg, jpeg.') }}</div>
-    <div id="{{ $name }}-error" class="text-danger">{{-- $message --}}</div>
+    <div id="{{ $name }}-error" class="text-danger error-msg">{{-- $message --}}</div>
 
 </div>

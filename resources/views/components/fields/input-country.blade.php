@@ -6,5 +6,5 @@
             <option value="{{ $code }}" {{ $user?->address?->country_code == $code ? 'selected' : '' }}>{{ $name }}</option>
            @endforeach
         </select>
-    <div id="country_code-error" class="text-danger">{{-- $message --}}</div>
+    <div id="country_code-error" class="text-danger" error-msg>{{-- $message --}}</div>
 </div>

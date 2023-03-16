@@ -5,6 +5,6 @@
             <option value="Enabled">{{ t('Enabled') }}</option>
             <option value="Disabled">{{ t('Disabled') }}</option>
         </select>
-    <div id="status-error" class="text-danger">{{-- $message --}}</div>
+    <div id="status-error" class="text-danger error-msg">{{-- $message --}}</div>
 
 </div>

@@ -5,7 +5,7 @@
             <option value="1">{{ t('Administrator') }}</option>
             <option value="1">{{ t('Staf') }}</option>
         </select>
-    <div id="{{ $name }}-error" class="text-danger">{{-- $message --}}</div>
+    <div id="{{ $name }}-error" class="text-danger error-msg">{{-- $message --}}</div>
 
       {{--   @error($name)
         <div class="text-danger">{{ $message }}</div>

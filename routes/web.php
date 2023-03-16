@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\Users\UsersController;
@@ -43,6 +44,9 @@ Route::group([
         Route::post('/delete-users', [UsersController::class, "del_ids"])->name("users.del_ids");
 
         Route::resource('roles', RoleController::class);
+        Route::resource('permissions', PermissionsController::class);
+        Route::post('/delete-permissions', [PermissionsController::class, "del_ids"])->name("permissions.del_ids");
+
 
     });
     require __DIR__ . '/auth.php';
