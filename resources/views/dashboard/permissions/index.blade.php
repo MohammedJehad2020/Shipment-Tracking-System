@@ -126,7 +126,8 @@
                 document.getElementById('add-permission')
             .reset(); //reset all inputs in form after storing data
                 //console.log(data);
-                $('.error-msg').val("");
+                $('.error-msg').text('');
+
 
                 Swal.fire({
                     text: "Added Permission Successfully",
@@ -140,6 +141,7 @@
 
             },
             error: function(data) {
+                $('.error-msg').text('');
                 var errors = data.responseJSON.errors;
             var erorr_arr = [];
             $.each(errors, function(index, value) {

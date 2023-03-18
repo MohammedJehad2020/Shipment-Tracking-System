@@ -30,8 +30,10 @@
                 </div>
                 <form class="form" id="update-permission-form" method="post" action="{{ route('permissions.store') }}">
                     @csrf
+                    @method('put')
                     <input type="text" name="id" value="{{ $permission->id }}" hidden>
-                    <x-fields.input title="{{ t('Permission Name') }}" type="text" name="updateName" id="name" value="{{ $permission->name }}" placeholder="{{ t('Enter a permission name') }}" />
+                    <input type="text" name="guard_name" value="{{ $permission->guard_name }}" hidden>
+                    <x-fields.input title="{{ t('Permission Name') }}" type="text" name="updateName" id="updateName" value="{{ $permission->name }}" placeholder="{{ t('Enter a permission name') }}" />
                     
                     <div class="text-center pt-15">
                         <x-buttons.discard-button />
@@ -45,10 +47,13 @@
 <script>
     $('#update-permission-form').submit(function(e) {
         e.preventDefault();
+        var id = $('#id').val();
         let formData = new FormData(this);
+        url = '{{ route('permissions.update', ':id') }}',
+              url = url.replace(':id', id);
         $.ajax({
             type: 'POST',
-            url: "{{ route('permissions.store') }}",
+            url: url,
             data: formData,
             contentType: false,
             processData: false,
@@ -59,12 +64,12 @@
                     $('#' + value + "_valid").removeClass('d-block');
                     $('#' + value + "_valid").html();
                 });
-                // $('#datatable').DataTable().ajax.reload();
+                $('#datatable').DataTable().ajax.reload();
                 $('#kt_modal_update_permission').modal('hide')
                 document.getElementById('update-permission-form')
             .reset(); //reset all inputs in form after storing data
                 //console.log(data);
-                $('.error-msg').innerHTML = "";
+                $('.error-msg').text('');
 
                 Swal.fire({
                     text: "Edited Permission Successfully",
@@ -78,10 +83,12 @@
 
             },
             error: function(data) {
+                $('.error-msg').text('');
                 var errors = data.responseJSON.errors;
             var erorr_arr = [];
             $.each(errors, function(index, value) {
                 var id_error = index+'-error';
+                console.log('error : '+ value[0]);
                  $('#'+ id_error).text(value[0]);
             });
             }

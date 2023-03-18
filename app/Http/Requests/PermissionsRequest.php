@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class PermissionsRequest extends FormRequest
 {
@@ -13,9 +14,17 @@ class PermissionsRequest extends FormRequest
      */
     public function rules()
     {
+        $validations  = null;
+        $column = null;
+        if ($this->isMethod('post')) {
+            $column = 'name';
+            $validations = 'required|unique:permissions,name,';
+        }else if($this->isMethod('put')){
+            $column = 'updateName';
+            $validations = 'required|unique:permissions,name,'.$this->id;
+        }
         return [
-            'name'=> 'required_without:id|unique:permissions,name',
-            'updateName'=> 'required_with:id|unique:permissions,name,'.$this->id,
+            $column => $validations,
         ];
     }
 
@@ -34,6 +43,7 @@ class PermissionsRequest extends FormRequest
             'required'=>t('This field is required'),
             'required_if'=>t('This field is required'),
             'required_with'=>t('This field is required'),
+            'required_without'=>t('This field is required'),
             'exists'=>t('Wrong value'),
             'integer'=>t('Wrong value'),
             'unique'=>t('The name has already been taken.'),

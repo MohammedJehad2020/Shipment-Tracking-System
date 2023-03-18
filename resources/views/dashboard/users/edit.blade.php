@@ -3494,6 +3494,7 @@
                 document.getElementById('edit-user')
             .reset(); //reset all inputs in form after storing data
                 //console.log(data);
+                $('.error-msg').text('');
 
                 Swal.fire({
                     text: "Edited User Successfully",
@@ -3507,6 +3508,7 @@
 
             },
             error: function(data) {
+                $('.error-msg').text('');
                 var errors = data.responseJSON.errors;
             var erorr_arr = [];
             $.each(errors, function(index, value) {

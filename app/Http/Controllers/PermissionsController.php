@@ -51,9 +51,7 @@ class PermissionsController extends Controller
      */
     public function store(PermissionsRequest $request)
     {
-        $name = $request->name ?? $request->updateName;
-        $req = ['name'=> $name,'guard_name'=> 'web'];
-        $permissions = parent::saveModel(new Request($req), $this->model, '');
+        $permissions = parent::saveModel($request, $this->model, '');
     }
 
     /**
@@ -69,18 +67,17 @@ class PermissionsController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        // dd($request->all(), $id);
         $permission = Permission::findOrFail($id);
         return view('components.permissions.update-form', compact('permission'));
-
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id): RedirectResponse
+    public function update(PermissionsRequest $request)
     {
-        //
+        $permission = Permission::findOrFail($request->id);
+        $permission->update(['name' => $request->updateName]);
     }
 
     /**
