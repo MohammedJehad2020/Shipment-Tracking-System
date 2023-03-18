@@ -47,15 +47,14 @@
                     //                     //<span>${full.email}</span>
                     //     }
                     // },
-                   /*  {
-                        targets: 4,
+                     {
+                        targets: 1,
                         orderable: false,
                         render: function (data) {
-                                 return `<td data-order="${data}">
-													<div class="badge badge-light fw-bolder">${data}</div>
-												</td>`;
+                            return `<a href="#" class="badge badge-light-primary fs-7 m-1">${data}</a>`;
+    
                         }
-                    }, */
+                    }, 
                   /*   {
                         targets: 3,
                         orderable: false,

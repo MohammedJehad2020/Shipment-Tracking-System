@@ -19,11 +19,11 @@ class PermissionsController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Permission::query()->orderBy('id','desc')->get()->map(function ($item) {
+            $data = Permission::query()->with(['roles'])->orderBy('id','desc')->get()->map(function ($item) {
                 return [
                     'id' => $item->id,
                     'name' =>$item->name,
-                    'assigned_to' =>'staf',
+                    'assigned_to' => $item->roles->pluck('name')->toArray(),
                     'created_at'=> $item->created_at->format('d-m-Y'),
                 ];
             })->toArray();
