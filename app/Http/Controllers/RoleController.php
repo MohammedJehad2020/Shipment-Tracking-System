@@ -4,12 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RolesRequest;
+use App\Models\Menu;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use DB;
 
 class RoleController extends Controller
 {
+
+    protected $model = Role::class;
+
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +23,7 @@ class RoleController extends Controller
     function __construct()
     {
         $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index', 'store']]);
-        $this->middleware('permission:role-create', ['only' => ['create', 'store']]);
+        // $this->middleware('permission:role-create', ['only' => ['create', 'store']]);
         $this->middleware('permission:role-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:role-delete', ['only' => ['destroy']]);
     }
@@ -29,9 +34,9 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        $roles = Role::orderBy('id', 'DESC')->paginate(5);
-        return view('roles.index', compact('roles'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+        $menus = Menu::get();
+        $roles = Role::orderBy('id', 'DESC')->get();
+        return view('dashboard.roles.index', compact('roles', 'menus'));
     }
     /**
      * Show the form for creating a new resource.
@@ -49,16 +54,10 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RolesRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required|unique:roles,name',
-            'permission' => 'required',
-        ]);
-        $role = Role::create(['name' => $request->input('name')]);
-        $role->syncPermissions($request->input('permission'));
-        return redirect()->route('roles.index')
-            ->with('success', 'Role created successfully');
+        $role = parent::saveModel($request, $this->model, '');
+        $role->syncPermissions($request->input('permissions'));
     }
     /**
      * Display the specified resource.
