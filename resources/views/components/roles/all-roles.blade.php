@@ -12,7 +12,7 @@
                @for ($i = 0; $i < count($role->permissions); $i++)
                 <div class="d-flex align-items-center py-2">
                 <span class="bullet bg-primary me-3"></span>{{ $role->permissions[$i]->name }}</div>
-                @if($i == 3) 
+                @if($i > 3) 
                     <div class='d-flex align-items-center py-2'>
                         <span class='bullet bg-primary me-3'></span>
                         <em>{{ t('and'). ' '.count($role->permissions)-4 . ' '. t('more...') }}</em>
@@ -24,8 +24,8 @@
             </div>
         </div>
         <div class="card-footer flex-wrap pt-0">
-            <a href="../../demo9/dist/apps/user-management/roles/view.html" class="btn btn-light btn-active-primary my-1 me-2">{{ t('View Role') }}</a>
-            <button type="button" class="btn btn-light btn-active-light-primary my-1" data-bs-toggle="modal" data-id="{{ $role->id }}" data-bs-target="#kt_modal_update_role">{{ t('Edit Role') }}</button>
+            <a href="{{ route('roles.show', $role->id) }}" class="btn btn-light btn-active-primary my-1 me-2">{{ t('View Role') }}</a>
+            <button type="button" id="editRoleButton" class="btn btn-light btn-active-light-primary my-1"  data-bs-toggle="modal" data-id="{{ $role->id }}">{{ t('Edit Role') }}</button>
         </div>
     </div>
 </div>

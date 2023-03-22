@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RolesRequest;
 use App\Models\Menu;
+use App\Models\User;
+use Carbon\Carbon;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use DB;
+use Yajra\DataTables\Facades\DataTables;
 
 class RoleController extends Controller
 {
@@ -67,11 +70,11 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        $role = Role::find($id);
-        $rolePermissions = Permission::join("role_has_permissions", "role_has_permissions.permission_id", "=", "permissions.id")
-            ->where("role_has_permissions.role_id", $id)
-            ->get();
-        return view('roles.show', compact('role', 'rolePermissions'));
+        $role = Role::with(['permissions', 'users'])->findOrFail($id);
+        $rolePermessionsIds = $role->permissions->pluck('id')->toArray();
+        $menus = Menu::with(['permissions'])->get();
+        return view('dashboard.roles.show', compact('role', 'menus','rolePermessionsIds'));
+    
     }
     /**
      * Show the form for editing the specified resource.
@@ -79,14 +82,12 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        $role = Role::find($id);
-        $permission = Permission::get();
-        $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id", $id)
-            ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')
-            ->all();
-        return view('roles.edit', compact('role', 'permission', 'rolePermissions'));
+        $role = Role::findOrFail($id);
+        $rolePermessionsIds = $role->permissions->pluck('id')->toArray();
+        $menus = Menu::with(['permissions'])->get();
+        return view('components.roles.update-role', compact('role', 'menus','rolePermessionsIds'));
     }
     /**
      * Update the specified resource in storage.
@@ -114,10 +115,54 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+   /*  public function destroy($id)
     {
         DB::table("roles")->where('id', $id)->delete();
         return redirect()->route('roles.index')
             ->with('success', 'Role deleted successfully');
+    } */
+
+
+    public function destroy( $id)
+    {
+            $item = User::find($id);
+            $item->delete();
+            return true;
+    }
+    public function del_ids(Request $request)
+    {
+        $item = User::whereIn('id', $request->ids)->delete();
+        return true;
+    }
+
+
+
+    public function roleUsers(Request $request, $id)
+    {
+        // dd($request->all(), $id);
+        $role = Role::findOrFail($request->id);
+        $users_ids = $role->users->pluck('id')->toArray();
+
+        if ($request->ajax()) {
+            $data = User::query()->whereIn('id', $users_ids)->orderBy('id','desc')->get()->map(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'name' =>$item->name,
+                    'image'=> $item->image ? asset('storage/uploads/users-images/'.$item->image) : asset('assets/media/avatars/blank.png'),
+                    'email' =>$item->email,
+                    'joined_date'=> $item->created_at->format('d-m-Y'),
+                ];
+            })->toArray();
+            $data =  response()->json( DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('checkboxes','dashboard.roles.datatables.checkbox')
+                ->addColumn('action', 'dashboard.roles.datatables.action') 
+
+                // ->addColumn('status_user','dashboard.roles.datatables.status_user')
+                ->rawColumns(['action', 'checkboxes'/* ,'status_user' */])
+                ->make(true));
+                return $data->original;
+        }
+        // return view('dashboard.roles.show');
     }
 }

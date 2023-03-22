@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class updateRole extends Component
+class roleShow extends Component
 {
     public $role, $menus, $rolePermessionsIds;
     /**
@@ -24,6 +24,6 @@ class updateRole extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.roles.update-role');
+        return view('components.roles.role-show');
     }
 }
