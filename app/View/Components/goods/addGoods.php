@@ -1,20 +1,19 @@
 <?php
 
-namespace App\View\Components\fields;
+namespace App\View\Components\goods;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class InputStatus extends Component
+class addGoods extends Component
 {
-    public $status;
     /**
      * Create a new component instance.
      */
-    public function __construct($status)
+    public function __construct()
     {
-        $this->status = $status;
+        //
     }
 
     /**
@@ -22,6 +21,6 @@ class InputStatus extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.fields.input-status');
+        return view('components.goods.add-goods');
     }
 }
