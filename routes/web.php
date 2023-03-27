@@ -42,9 +42,12 @@ Route::group([
 
         Route::resource('users', UsersController::class);
         Route::post('/delete-users', [UsersController::class, "del_ids"])->name("users.del_ids");
+        
 
         Route::get('/role-users/{id}', [RoleController::class, 'roleUsers'])->name('role.users');
         Route::post('/delete-role-users', [RoleController::class, "del_ids"])->name("role.users.del_ids");
+        Route::delete('/delete-role-user/{id}/{roleId}', [RoleController::class, "destroy"])->name("role.user.delete");
+
         Route::resource('roles', RoleController::class);
         Route::resource('permissions', PermissionsController::class);
         Route::post('/delete-permissions', [PermissionsController::class, "del_ids"])->name("permissions.del_ids");

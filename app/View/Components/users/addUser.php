@@ -8,12 +8,13 @@ use Illuminate\View\Component;
 
 class addUser extends Component
 {
+    public $roles;
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($roles)
     {
-        //
+        $this->roles = $roles;
     }
 
     /**

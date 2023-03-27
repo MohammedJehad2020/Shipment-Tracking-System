@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use DB;
+use Spatie\Permission\PermissionRegistrar;
 use Yajra\DataTables\Facades\DataTables;
 
 class RoleController extends Controller
@@ -25,10 +26,10 @@ class RoleController extends Controller
      */
     function __construct()
     {
-        $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index', 'store']]);
+        // $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index', 'store']]);
         // $this->middleware('permission:role-create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:role-edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:role-delete', ['only' => ['destroy']]);
+        // $this->middleware('permission:role-edit', ['only' => ['edit', 'update']]);
+        // $this->middleware('permission:role-de    lete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -123,31 +124,34 @@ class RoleController extends Controller
     } */
 
 
-    public function destroy( $id)
+    public function destroy( $id, $roleId)
     {
-            $item = User::find($id);
-            $item->delete();
-            return true;
+        $user = User::with(['roles'])->findOrFail($id);
+        $user->roles()->detach($roleId);
+        return true;
     }
     public function del_ids(Request $request)
     {
-        $item = User::whereIn('id', $request->ids)->delete();
-        return true;
+        /* $users = User::whereIn('id', $request->ids)->delete();
+        foreach($users as $user){
+         $user->roles()->detach($roleId);
+        }
+        return true; */
     }
 
 
 
     public function roleUsers(Request $request, $id)
     {
-        // dd($request->all(), $id);
-        $role = Role::findOrFail($request->id);
+        $role = Role::findOrFail($id);
         $users_ids = $role->users->pluck('id')->toArray();
 
         if ($request->ajax()) {
-            $data = User::query()->whereIn('id', $users_ids)->orderBy('id','desc')->get()->map(function ($item) {
+            $data = User::query()->whereIn('id', $users_ids)->orderBy('id','desc')->get()->map(function ($item, $id) {
                 return [
                     'id' => $item->id,
                     'name' =>$item->name,
+                    // 'roleId' => $id,
                     'image'=> $item->image ? asset('storage/uploads/users-images/'.$item->image) : asset('assets/media/avatars/blank.png'),
                     'email' =>$item->email,
                     'joined_date'=> $item->created_at->format('d-m-Y'),
@@ -156,7 +160,10 @@ class RoleController extends Controller
             $data =  response()->json( DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('checkboxes','dashboard.roles.datatables.checkbox')
+                ->addColumn('roleId', $id) 
+
                 ->addColumn('action', 'dashboard.roles.datatables.action') 
+
 
                 // ->addColumn('status_user','dashboard.roles.datatables.status_user')
                 ->rawColumns(['action', 'checkboxes'/* ,'status_user' */])

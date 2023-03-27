@@ -191,7 +191,7 @@
                         </div>
                     </div>
                 </div>
-                <x-users.add-user />
+                <x-users.add-user :roles="$roles"/>
             </div>
         </div>
         <div class="card-body py-4">

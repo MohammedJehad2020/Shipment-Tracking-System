@@ -2,8 +2,11 @@
     <label for="role_id" class="required fs-5 fw-bold mb-2 @error('title') is-invalid @enderror">{{ $title }}</label>
     <select name="{{ $name }}" id="{{ $id }}" data-control="select2" data-hide-search="true" data-placeholder="{{ $placeholder }}" class="form-select form-select-solid">
             <option value="{{ null }}">{{ t('Select Role') }}</option>
-            <option value="1">{{ t('Administrator') }}</option>
-            <option value="1">{{ t('Staf') }}</option>
+            @foreach($roles as $role)
+              <option value="{{ $role->id }}">{{ t($role->name) }}</option>
+            @endforeach
+            {{-- <option value="1">{{ t('Administrator') }}</option>
+            <option value="1">{{ t('Staf') }}</option> --}}
         </select>
     <div id="{{ $name }}-error" class="text-danger error-msg">{{-- $message --}}</div>
 

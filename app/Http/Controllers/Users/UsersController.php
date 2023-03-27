@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 class UsersController extends Controller
 {
@@ -46,7 +47,8 @@ class UsersController extends Controller
                 ->make(true));
                 return $data->original;
         }
-        return view('dashboard.users.index');
+        $roles = Role::get();
+        return view('dashboard.users.index', compact('roles'));
     }
 
     /**
@@ -71,6 +73,7 @@ class UsersController extends Controller
         }else{
             $obj->notify(new UserLoginDetails($obj, $password));
         }
+        $obj->syncRoles($request->role_id);
     }
 
     /**

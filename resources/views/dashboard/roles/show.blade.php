@@ -174,7 +174,7 @@
         </div>
 </x-master>
 @include('dashboard.roles.scripts.datatableJs')
-@include('dashboard.includes.delete_item',['route_delete'=>url("/roles")])
+{{-- @include('dashboard.includes.delete_item',['route_delete'=>url("/roles")]) --}}
 @include('dashboard.includes.delete_array', ['route_delete' => route('role.users.del_ids')])
 
 <script>
@@ -224,4 +224,52 @@
             }
         });
     });
+</script>
+<script>
+    function  DeleteItem(id, roleId) {
+        alert(roleId)
+        var url = '{{ route('role.user.delete', [':id', ':roleId']) }}'
+        url = url.replace(':id', id);
+        url = url.replace(':roleId', roleId);
+        alert(url)
+        Swal.fire({
+                title: 'Are you sure to delete?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete',
+                cancelButtonText: 'No, cancel it!',
+                reverseButtons: true,
+
+                showLoaderOnConfirm: true,
+                preConfirm: (login) => {
+                    // Make a request for a user with a given ID
+                    return  axios.delete(url)
+                    // .then(function (response) {
+                    // handle success
+                    // console.log(response);
+                    // })
+                },
+
+                allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+                $("#datatable").DataTable().ajax.reload();
+                if (result.isConfirmed) {
+
+                    Swal.fire({
+                        icon: "success",
+                        title: "Deleted successfully!",
+                        confirmButtonColor: "#5664d2",
+                        confirmButtonText: 'Ok'
+                        // html: JSON.stringify(result),
+                    })
+                }else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Delete is not completed!",
+                        confirmButtonColor: "#5664d2",
+                        // html: JSON.stringify(result),
+                    })
+                }
+            })
+}
 </script>

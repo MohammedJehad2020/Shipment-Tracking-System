@@ -20,7 +20,7 @@
                         <x-fields.avatar title="{{ t('Avatar') }}" name="image" id="avatar" avatar="{{ asset('assets/media/avatars/300-6.jpg') }}" />
                         <x-fields.input title="{{ t('Full Name') }}" type="text" name="name" id="name" value="" placeholder="{{ t('Full name') }}" />
                         <x-fields.input title="{{ t('Email') }}" type="email" name="email" id="email" value="" placeholder="{{ t('example@domain.com') }}" />
-                        <x-fields.input-select title="{{ t('Role') }}" name="role_id" id="role_id" value="" placeholder="{{ t('Select Role') }}"/>
+                        <x-fields.input-select title="{{ t('Role') }}" name="role_id" :roles="$roles" id="role_id" value="" placeholder="{{ t('Select Role') }}"/>
                         <x-fields.input-status /> 
                     </div>
                     <div class="text-center pt-15">
