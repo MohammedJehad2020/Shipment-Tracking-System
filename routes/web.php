@@ -4,6 +4,7 @@ use App\Http\Controllers\GoodsController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ShipmentsController;
 use App\Http\Controllers\Users\UsersController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -57,6 +58,9 @@ Route::group([
         #Goods
         Route::post('/delete-goods', [GoodsController::class, "del_ids"])->name("goods.del_ids");
         Route::resource('goods', GoodsController::class);
+        #Shipments
+        Route::post('/delete-shipments', [ShipmentsController::class, "del_ids"])->name("shipments.del_ids");
+        Route::resource('shipments', ShipmentsController::class);
 
     });
     require __DIR__ . '/auth.php';
