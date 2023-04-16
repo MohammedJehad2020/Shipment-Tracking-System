@@ -1392,12 +1392,13 @@
                                 </div>
                             </div>
                         </div>
+                        @role('admin 2')
                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion mb-1">
                             <span class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
-                                <span class="menu-title">User Management</span>
+                                <span class="menu-title">{{ t('User Management') }}</span>
                                 <span class="menu-arrow"></span>
                             </span>
                             <div class="menu-sub menu-sub-accordion">
@@ -1406,10 +1407,11 @@
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
-                                        <span class="menu-title">Users</span>
+                                        <span class="menu-title">{{ t('Users') }}</span>
                                         <span class="menu-arrow"></span>
                                     </span>
                                     <div class="menu-sub menu-sub-accordion">
+                                        @can('user-list')
                                         <div class="menu-item">
                                             <a class="menu-link" href="{{ route('users.index') }}">
                                                 <span class="menu-bullet">
@@ -1418,12 +1420,13 @@
                                                 <span class="menu-title">{{ t('Users List') }}</span>
                                             </a>
                                         </div>
+                                        @endcan
                                         <div class="menu-item">
                                             <a class="menu-link" href="../../demo9/dist/apps/user-management/users/view.html">
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
-                                                <span class="menu-title">View User</span>
+                                                <span class="menu-title">{{ t('View User') }}</span>
                                             </a>
                                         </div>
                                     </div>
@@ -1433,7 +1436,7 @@
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
-                                        <span class="menu-title">Roles</span>
+                                        <span class="menu-title">{{ t('Roles') }}</span>
                                         <span class="menu-arrow"></span>
                                     </span>
                                     <div class="menu-sub menu-sub-accordion">
@@ -1442,7 +1445,7 @@
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
-                                                <span class="menu-title">Roles List</span>
+                                                <span class="menu-title">{{ t('Roles List') }}</span>
                                             </a>
                                         </div>
                                         <div class="menu-item">
@@ -1450,7 +1453,7 @@
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
-                                                <span class="menu-title">View Role</span>
+                                                <span class="menu-title">{{ t('View Role') }}</span>
                                             </a>
                                         </div>
                                     </div>
@@ -1460,11 +1463,12 @@
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
-                                        <span class="menu-title">Permissions</span>
+                                        <span class="menu-title">{{ t('Permissions') }}</span>
                                     </a>
                                 </div>
                             </div>
                         </div>
+                        @endrole
                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                             <span class="menu-link">
                                 <span class="menu-bullet">

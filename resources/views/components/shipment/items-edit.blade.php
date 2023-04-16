@@ -12,9 +12,9 @@
             <select name="shipment_type" id="shipment_type" data-control="select2" data-hide-search="true"
                 class="form-select form-select-solid shipment_type">
                 <option value="{{ null }}">{{ t('Select shipment type') }}</option>
-                <option value="city_to_city">{{ t('City to City') }}</option>
-                <option value="inside_city">{{ t('Inside City') }}</option>
-                <option value="country_to_country">{{ t('Country to Country') }}</option>
+                <option value="city_to_city" {{ $shipment->shipment_type == 'city_to_city' ? 'selected' : '' }}>{{ t('City to City') }}</option>
+                <option value="inside_city" {{ $shipment->shipment_type == 'inside_city' ? 'selected' : '' }}>{{ t('Inside City') }}</option>
+                <option value="country_to_country" {{ $shipment->shipment_type == 'country_to_country' ? 'selected' : '' }}>{{ t('Country to Country') }}</option>
             </select>
             <div id="shipment_type-error" class="text-danger error-msg">{{-- $message --}}</div>
         </div>
@@ -24,27 +24,28 @@
                 <div class="form-group">
                     <label for="goods"
                     class="required fs-5 fw-bold mb-2">{{ t('Goods') }}</label>
-                    <input type="text" name="finalTotal" id="finalTotal" value="" class="form-control form-control-solid mb-3 mb-lg-0 finalTotal" placeholder="{{ t('Final Total') }}"  />
+                    <input type="text" name="finalTotal" id="finalTotal" value="{{ $shipment->total_amount }}" class="form-control form-control-solid mb-3 mb-lg-0 finalTotal" placeholder="{{ t('Final Total') }}"  />
 
                     <div data-repeater-list="kt_ecommerce_add_category_conditions" class="d-flex flex-column gap-3">
+                       @foreach($shipmentGoods as $shipment_goods)
                         <div data-repeater-item="" class="form-group d-flex flex-wrap gap-5">
                             <div class="w-100 w-md-200px">
                                 <select class="form-select" name="goods_id"
                                     data-kt-ecommerce-catalog-add-category="goods_id">
                                     <option value="{{ null }}">{{ t('Select Goods') }}</option>
                                     @foreach ($goods as $good)
-                                        <option value="{{ $good->id }}">{{ $good->name }}</option>
+                                        <option value="{{ $good->id }}" {{ $shipment_goods->goods_id == $good->id ? 'selected' : '' }}>{{ $good->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                           
 
-                            <input type="text" class="form-control mw-100 w-150px price" name="price" id="price" onchange="Calc(this);"
+                            <input type="text" class="form-control mw-100 w-150px price" name="price" value="{{ $shipment_goods->price }}" id="price" onchange="Calc(this);"
                                 placeholder="{{ t('price') }}" />
 
-                            <input type="text" class="form-control mw-100 w-150px weight" name="weight" id="weight" onchange="Calc(this);"
+                            <input type="text" class="form-control mw-100 w-150px weight" name="weight" value="{{ $shipment_goods->weight }}" id="weight" onchange="Calc(this);"
                                 placeholder="{{ t('amount') }}" />
-                            <input type="text" class="form-control mw-100 w-150px total" name="total" id="total" placeholder="{{ t('total') }}"
+                            <input type="text" class="form-control mw-100 w-150px total" name="total" id="total" value="{{ $shipment_goods->total }}" placeholder="{{ t('total') }}"
                                 readonly />
 
                             <button type="button" data-repeater-delete="" onclick="BtnDelete(this);" class="btn btn-sm btn-icon btn-light-danger">
@@ -59,6 +60,9 @@
                                 </span>
                             </button>
                         </div>
+
+                    @endforeach
+
                     </div>
                 </div>
                 <div class="form-group mt-5">

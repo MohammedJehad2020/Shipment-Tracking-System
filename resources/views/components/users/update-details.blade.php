@@ -29,8 +29,10 @@
                             <x-fields.avatar title="{{ t('Avatar') }}" name="image" id="avatar" avatar="{{ $user->image ? asset('storage/uploads/users-images/'.$user->image) : asset('/assets/media/avatars/blank.png')}}" />
                             <x-fields.input title="{{ t('Full Name') }}" type="text" name="name" id="name" value="{{ $user->name }}" placeholder="{{ t('Full name') }}" />
                             <x-fields.input title="{{ t('Email') }}" type="email" name="email" id="email" value="{{ $user->email }}" placeholder="{{ t('example@domain.com') }}" />
+                            <x-fields.input-select title="{{ t('Role') }}" name="role_id" :roles="$roles" id="role_id" :rolesIds="$rolesIds" value="" placeholder="{{ t('Select Role') }}"/>
                             <x-fields.input title="{{ t('Description') }}" type="text" name="description" id="description" value="{{ $user->description }}" placeholder="{{ t('description') }}" />
                             <x-fields.input-language :user="$user"/>
+
                         </div>
                         <div class="fw-boldest fs-3 rotate collapsible mb-7" data-bs-toggle="collapse" href="#kt_modal_update_user_address" role="button" aria-expanded="false" aria-controls="kt_modal_update_user_address">Address Details
                         <span class="ms-2 rotate-180">

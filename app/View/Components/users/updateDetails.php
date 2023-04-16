@@ -9,13 +9,15 @@ use Illuminate\View\Component;
 class updateDetails extends Component
 {
 
-    public $user;
+    public $user, $roles, $rolesIds;
     /**
      * Create a new component instance.
      */
-    public function __construct($user)
+    public function __construct($user, $roles, $rolesIds)
     {
         $this->user = $user;
+        $this->rolesIds = $rolesIds;
+        $this->roles = $roles;
     }
 
     /**

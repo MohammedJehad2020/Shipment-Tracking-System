@@ -90,15 +90,17 @@
                     <!--end::Svg Icon-->{{ t('Export') }}</button>
                     <!--end::Export-->
                     <!--begin::Add user-->
+                   @can('user-create')
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">
-                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
-                    <span class="svg-icon svg-icon-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="black" />
-                            <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black" />
-                        </svg>
-                    </span>
-                    <!--end::Svg Icon-->{{ t('Add User') }}</button>
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
+                        <span class="svg-icon svg-icon-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="black" />
+                                <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->{{ t('Add User') }}</button>
+                   @endcan
                     &nbsp; &nbsp;
 
                     <button type="button" onclick="delete_box_select()" class="btn btn-danger" data-kt-user-table-select="delete_selected">Delete Selected</button>
@@ -121,7 +123,7 @@
                             <!--begin::Modal header-->
                             <div class="modal-header">
                                 <!--begin::Modal title-->
-                                <h2 class="fw-bolder">Export Users</h2>
+                                <h2 class="fw-bolder">{{ t('Export Users') }}</h2>
                                 <!--end::Modal title-->
                                 <!--begin::Close-->
                                 <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
@@ -191,7 +193,7 @@
                         </div>
                     </div>
                 </div>
-                <x-users.add-user :roles="$roles"/>
+                <x-users.add-user :roles="$roles" :rolesIds="$rolesIds" />
             </div>
         </div>
         <div class="card-body py-4">

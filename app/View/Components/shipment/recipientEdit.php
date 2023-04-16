@@ -1,29 +1,27 @@
 <?php
 
-namespace App\View\Components\users;
+namespace App\View\Components\shipment;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class addUser extends Component
+class recipientEdit extends Component
 {
-    public $roles, $rolesIds;
+    public $shipment;
     /**
      * Create a new component instance.
      */
-    public function __construct($roles, $rolesIds)
+    public function __construct($shipment)
     {
-        $this->rolesIds = $rolesIds;
-        $this->roles = $roles;
+        $this->shipment = $shipment;
     }
-
 
     /**
      * Get the view / contents that represent the component.
      */
     public function render(): View|Closure|string
     {
-        return view('components.users.add-user');
+        return view('components.shipment.recipient-edit');
     }
 }

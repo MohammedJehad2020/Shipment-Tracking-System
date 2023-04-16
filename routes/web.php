@@ -25,7 +25,7 @@ Route::group([
 ], function () {
 
     Route::get('/', function () {
-        return view('welcome');
+        return view('auth.authPages.loginPage');
     });
 
     Route::get('/dashboard', function () {
@@ -33,8 +33,7 @@ Route::group([
     })->middleware(['auth', 'verified'])->name('dashboard');
 
     Route::get('/master', function () {
-        // return 
-        return view('master');
+        return view('home');
     })->middleware(['auth', 'verified'])->name('master');
 
     Route::middleware('auth')->group(function () {

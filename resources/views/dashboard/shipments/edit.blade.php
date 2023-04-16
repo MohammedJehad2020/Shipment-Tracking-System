@@ -1,11 +1,13 @@
 <x-master>
-    <form id="add-shipment" method="POST" action="{{ route('shipments.store') }}" class="form d-flex flex-column flex-lg-row" data-kt-redirect="../../demo9/dist/apps/ecommerce/catalog/category.html">
+    <form id="edit-shipment" method="POST" action="{{ route('shipments.update', $shipment->id) }}" class="form d-flex flex-column flex-lg-row" data-kt-redirect="">
        @csrf
+       @method('put')
+       <input type="text" name="id" id="id" value="{{ $shipment->id }}" hidden> 
         <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
             <div class="card card-flush py-4">
                 <div class="card-header">
                     <div class="card-title">
-                        <h2>{{ t('Add New Shipment') }}</h2>
+                        <h2>{{ t('Edit Shipment') }}</h2>
                     </div>
                 </div>
                 <div class="card-body text-center pt-0">
@@ -24,9 +26,9 @@
                 <div class="card-body pt-0">
                     <select class="form-select mb-2 status" name="status" id="status" data-control="select2" data-hide-search="true" id="kt_ecommerce_add_product_status_select">
                         <option value="{{ null }}">{{ t('Select Status') }}</option>
-                        <option value="pending">{{ t('Pending') }}</option>
-                        <option value="in-progress">{{ t('In Progress') }}</option>
-                        <option value="complete">{{ t('Complete') }}</option>
+                        <option value="pending" {{ $shipment->status == 'pending' ? 'selected' : '' }}>{{ t('Pending') }}</option>
+                        <option value="in-progress" {{ $shipment->status == 'in-progress' ? 'selected' : '' }}>{{ t('In Progress') }}</option>
+                        <option value="complete" {{ $shipment->status == 'complete' ? 'selected' : '' }}>{{ t('Complete') }}</option>
                     </select>
                    <div id="status-error" class="text-danger error-msg">{{-- $message --}}</div>
 
@@ -39,9 +41,9 @@
             </div>
         </div>
         <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
-            <x-shipment.sender />
-            <x-shipment.recipient />
-            <x-shipment.items :goods="$goods"/>
+            <x-shipment.sender-edit  :shipment="$shipment" />
+            <x-shipment.recipient-edit :shipment="$shipment"/>
+            <x-shipment.items-edit :goods="$goods" :shipment="$shipment" :shipmentGoods="$shipmentGoods"/>
             <div class="d-flex justify-content-end">
                 <a href="{{ route('shipments.index') }}" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">{{ t('Cancel') }}</a>
                 <x-buttons.submit-button />
@@ -50,12 +52,15 @@
     </form>
 </x-master>
 <script>
-    $('#add-shipment').submit(function(e) {
+    $('#edit-shipment').submit(function(e) {
         e.preventDefault();
+        var id = $('#id').val();
+        var url = '{{ route('shipments.update', ':id') }}'
+        url = url.replace(':id', id);
         let formData = new FormData(this);
         $.ajax({
             type: 'POST',
-            url: "{{ route('shipments.store') }}",
+            url: url,
             data: formData,
             contentType: false,
             processData: false,
@@ -69,16 +74,13 @@
                 $("#status").val("").trigger( "change" );
                 $("#shipment_type").val("").trigger( "change" );
 
-                document.getElementById('add-shipment')
+                document.getElementById('edit-shipment')
             .reset(); //reset all inputs in form after storing data
                 //console.log(data);
                 $('.error-msg').text('');
-               
-
-
 
                 Swal.fire({
-                    text: "Shipment Created Successfully",
+                    text: "Shipment Edited Successfully",
                     icon: "success",
                     buttonsStyling: false,
                     confirmButtonText: "Ok, got it!",

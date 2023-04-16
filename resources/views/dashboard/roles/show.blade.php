@@ -227,11 +227,9 @@
 </script>
 <script>
     function  DeleteItem(id, roleId) {
-        alert(roleId)
         var url = '{{ route('role.user.delete', [':id', ':roleId']) }}'
         url = url.replace(':id', id);
         url = url.replace(':roleId', roleId);
-        alert(url)
         Swal.fire({
                 title: 'Are you sure to delete?',
                 icon: 'question',

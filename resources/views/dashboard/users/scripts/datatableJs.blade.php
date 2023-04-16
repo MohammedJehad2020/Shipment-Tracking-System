@@ -150,9 +150,6 @@
             init: function () {
                 initDatatable();
                 handleSearchDatatable();
-    
-         
-            
             }
         }
     }();

@@ -31,7 +31,7 @@ class UsersController extends Controller
                     'name' =>$item->name,
                     'image'=> $item->image ? asset('storage/uploads/users-images/'.$item->image) : asset('assets/media/avatars/blank.png'),
                     'email' =>$item->email,
-                    'role'=> $item?->profile_image,
+                    'role'=> $item?->roles->pluck('name'),
                     'last_login' => Carbon::parse($item?->last_login_at)->diffForHumans(), //,
                     'joined_date'=> $item->created_at->format('d-m-Y'),
                     'status' => $item?->status,
@@ -48,7 +48,9 @@ class UsersController extends Controller
                 return $data->original;
         }
         $roles = Role::get();
-        return view('dashboard.users.index', compact('roles'));
+        $rolesIds = [];
+
+        return view('dashboard.users.index', compact('roles', 'rolesIds'));
     }
 
     /**
@@ -81,8 +83,10 @@ class UsersController extends Controller
      */
     public function show(string $id)
     {
-        $user = User::findOrFail($id);
-        return view('dashboard.users.edit', compact('user'));
+        $user = User::with(['roles'])->findOrFail($id);
+        $rolesIds = $user->roles->pluck('id')->toArray();
+        $roles = Role::get();
+        return view('dashboard.users.edit', compact('user', 'roles', 'rolesIds'));
     }
 
     /**

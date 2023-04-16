@@ -1,5 +1,7 @@
-@if($status == 'Enabled')
-<span class="badge badge-light-success me-4">{{ t('Enabled') }}</span>
-@else
-<span class="badge badge-light-danger me-4">{{ t('Disabled') }}</span>
+@if($status == 'pending')
+<span class="badge badge-light-warning me-4">{{ t('Pending') }}</span>
+@elseif($status == 'in-progress')
+<span class="badge badge-light-primary me-4">{{ t('In Progress') }}</span>
+@elseif($status == 'complete')
+<span class="badge badge-light-success me-4">{{ t('Complete') }}</span>
 @endif

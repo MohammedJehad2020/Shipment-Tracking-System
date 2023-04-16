@@ -2787,7 +2787,7 @@
     <!--end::Layout-->
     <!--begin::Modals-->
     <!--begin::Modal - Update user details-->
-    <x-users.update-details :user="$user"/>
+    <x-users.update-details :user="$user" :roles="$roles" :rolesIds="$rolesIds"/>
 
     <!--end::Modal - Update user details-->
     <!--begin::Modal - Add schedule-->
