@@ -50,6 +50,8 @@
     </form>
 </x-master>
 <script>
+    $("#shipment_datepicker").flatpickr();
+
     $('#add-shipment').submit(function(e) {
         e.preventDefault();
         let formData = new FormData(this);

@@ -10,6 +10,10 @@
 		<script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
 		<!--end::Page Vendors Javascript-->
 		<!--begin::Page Custom Javascript(used by this page)-->
+		<script src="{{ asset('assets/js/custom/account/settings/signin-methods.js') }}"></script>
+		<script src="{{ asset('assets/js/custom/account/settings/profile-details.js') }}"></script>
+		<script src="{{ asset('assets/js/custom/account/settings/deactivate-account.js') }}"></script>
+
 		<script src="{{ asset('assets/js/custom/modals/select-location.js') }}"></script>
 		<script src="{{ asset('assets/js/widgets.bundle.js') }}"></script>
 		<script src="{{ asset('assets/plugins/custom/formrepeater/formrepeater.bundle.js') }}"></script>

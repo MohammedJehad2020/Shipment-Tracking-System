@@ -1,7 +1,6 @@
 <?php
 
-
-
+use App\Models\Address;
 
 function t($key)
 {
@@ -26,4 +25,21 @@ function t($key)
 function lang()
 {
     return app()->getLocale();
+}
+
+function updateUserAddress($request)
+{
+    $address = Address::updateOrCreate(
+        [
+           'user_id' => $request->id,
+        ],[
+            'country_code' => $request->country_code,
+            'state' => $request->state,
+            'city' => $request->city,
+            'street' => $request->street,
+            'post_code' => $request->post_code,
+        ], 
+    );
+    return $address;
+
 }

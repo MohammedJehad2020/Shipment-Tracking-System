@@ -6,6 +6,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ShipmentsController;
 use App\Http\Controllers\Users\UsersController;
+use App\Models\Goods;
+use App\Models\Shipment;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -33,12 +35,19 @@ Route::group([
     })->middleware(['auth', 'verified'])->name('dashboard');
 
     Route::get('/master', function () {
-        return view('home');
+        $goods = Goods::count();
+        $shipments = Shipment::count();
+        $in_progress_shipment_count = Shipment::where('status', 'in-progress')->count();
+        $complete_shipment_count = Shipment::where('status', 'complete')->count();
+        $pending_shipment_count = Shipment::where('status', 'pending')->count();
+        $salesCount = Shipment::where('status', 'complete')->sum('total_amount');
+        return view('home',compact('goods','salesCount', 'shipments','in_progress_shipment_count','complete_shipment_count','pending_shipment_count'));
     })->middleware(['auth', 'verified'])->name('master');
 
     Route::middleware('auth')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::post('/profile/reset-password', [ProfileController::class, 'resetPassword'])->name('profile.resetPassword');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
         Route::resource('users', UsersController::class);

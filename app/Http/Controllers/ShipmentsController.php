@@ -60,6 +60,7 @@ class ShipmentsController extends Controller
             'code' => $this->generateShipmentCode(),
             'shipment_type'=> $request->shipment_type,
             'total_amount'=> $request->finalTotal,
+            'delivery_date' => $request->delivery_date,
             'status' => $request->status,
         ]);
         $this->addShipmentData($request, $shipment->id);
@@ -98,6 +99,7 @@ class ShipmentsController extends Controller
         'shipment_type'=> $request->shipment_type,
         'total_amount'=> $request->finalTotal,
         'status' => $request->status,
+        'delivery_date' => $request->delivery_date,
     ]);
     $this->addShipmentData($request, $shipment->id);
     $this->addShipmentGoods($request->kt_ecommerce_add_category_conditions, $shipment->id);

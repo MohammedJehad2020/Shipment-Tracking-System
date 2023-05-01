@@ -1319,7 +1319,7 @@
                         <!--end::Menu separator-->
                         <!--begin::Menu item-->
                         <div class="menu-item px-5">
-                            <a href="{{ route('profile.edit') }}" class="menu-link px-5">My Profile</a>
+                            <a href="{{ route('profile.edit') }}" class="menu-link px-5">{{ t('My Profile') }}</a>
                         </div>
                         <!--end::Menu item-->
                         <!--begin::Menu item-->
@@ -1389,7 +1389,7 @@
                         <!--begin::Menu item-->
                         <div class="menu-item px-5" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">
                             <a href="#" class="menu-link px-5">
-                                <span class="menu-title position-relative">Language
+                                <span class="menu-title position-relative">{{ T('Language') }}
                                 <span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">English
                                 <img class="w-15px h-15px rounded-1 ms-2" src="assets/media/flags/united-states.svg" alt="" /></span></span>
                             </a>
@@ -1420,7 +1420,7 @@
                                 <label class="form-check form-switch form-check-custom form-check-solid pulse pulse-success" for="kt_user_menu_dark_mode_toggle">
                                     <input class="form-check-input w-30px h-20px" type="checkbox" value="1" name="mode" id="kt_user_menu_dark_mode_toggle" data-kt-url="../../demo9/dist/index.html" />
                                     <span class="pulse-ring ms-n1"></span>
-                                    <span class="form-check-label text-gray-600 fs-7">Dark Mode</span>
+                                    <span class="form-check-label text-gray-600 fs-7">{{ t('Dark Mode') }}</span>
                                 </label>
                             </div>
                         </div>

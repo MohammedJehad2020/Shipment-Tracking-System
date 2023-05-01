@@ -19,6 +19,18 @@
             <div id="shipment_type-error" class="text-danger error-msg">{{-- $message --}}</div>
         </div>
 
+        <div class="fv-row mb-7">
+            <!--begin::Label-->
+            <label class="fs-6 fw-bold form-label mb-2">
+                <span class="required">{{ t('Delivery Date') }}</span>
+                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-html="true" data-bs-content="Select a date &amp; time."></i>
+            </label>
+            <!--end::Label-->
+            <!--begin::Input-->
+            <input class="form-control form-control-solid" placeholder="Pick date &amp; time" name="delivery_date" id="shipment_datepicker" value="{{ $shipment->delivery_date }}"/>
+            <!--end::Input-->
+        </div>
+
         <div class="mt-10" data-kt-ecommerce-catalog-add-category="auto-options">
             <div id="kt_ecommerce_add_category_conditions">
                 <div class="form-group">

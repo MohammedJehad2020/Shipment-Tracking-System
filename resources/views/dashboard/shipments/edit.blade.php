@@ -52,6 +52,8 @@
     </form>
 </x-master>
 <script>
+    $("#shipment_datepicker").flatpickr();
+
     $('#edit-shipment').submit(function(e) {
         e.preventDefault();
         var id = $('#id').val();
