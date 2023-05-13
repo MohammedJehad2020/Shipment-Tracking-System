@@ -90,7 +90,7 @@
                     <!--end::Svg Icon-->{{ t('Export') }}</button>
                     <!--end::Export-->
                     <!--begin::Add user-->
-                   @can('user-create')
+                   {{-- @can('user-create') --}}
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
                         <span class="svg-icon svg-icon-2">
@@ -100,7 +100,7 @@
                             </svg>
                         </span>
                         <!--end::Svg Icon-->{{ t('Add User') }}</button>
-                   @endcan
+                   {{-- @endcan --}}
                     &nbsp; &nbsp;
 
                     <button type="button" onclick="delete_box_select()" class="btn btn-danger" data-kt-user-table-select="delete_selected">Delete Selected</button>

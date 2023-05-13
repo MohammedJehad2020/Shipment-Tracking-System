@@ -74,6 +74,7 @@ class UsersController extends Controller
           $this->updateOrCreateAddress($request);
         }else{
             $obj->notify(new UserLoginDetails($obj, $password));
+            sendSMS(/* "970592028232", "Hello, How Are You?" */);
         }
         $obj->syncRoles($request->role_id);
     }
